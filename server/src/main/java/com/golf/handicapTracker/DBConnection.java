@@ -11,7 +11,7 @@ public class DBConnection {
 	private Connection con;	
 	private static final String url = "jdbc:postgresql://192.168.1.126:5432/handicapTracker";
 	private static final String user = "jared";
-	private static final String password = "CuCsu2528";
+	private static final String password = "";
 	
 	DBConnection(){
 		try {
@@ -24,26 +24,20 @@ public class DBConnection {
 	public boolean insertNewCourse(String courseName, String courseCity, String courseState, String teeColor, double rating, int slope ) {
 		try {
 			con.setAutoCommit(false);
-			PreparedStatement stmt = con.prepareStatement("insert into course values (DEFAULT,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement stmt = con.prepareStatement("insert into course values (?,?,?)");
 			stmt.setString(1, courseName);
 			stmt.setString(2, courseCity);
 			stmt.setString(3, courseState);
 			stmt.executeUpdate();
 			
-			ResultSet rs = stmt.getGeneratedKeys();
-			int courseID = -1;
-			if(rs.next()) {
-				courseID = rs.getInt(1);
-			}
-			else {
-				throw new  SQLException();
-			}
 			
-			stmt = con.prepareStatement("insert into tees values (?,?,?,?)");
-			stmt.setInt(1, courseID);
-			stmt.setString(2, teeColor);
-			stmt.setDouble(3, rating);
-			stmt.setInt(4, slope);
+			stmt = con.prepareStatement("insert into tees values (?,?,?,?,?,?)");
+			stmt.setString(1, courseName);
+			stmt.setString(2, courseCity);
+			stmt.setString(3, courseState);
+			stmt.setString(4, teeColor.toUpperCase());
+			stmt.setDouble(5, rating);
+			stmt.setInt(6, slope);
 			
 			stmt.executeUpdate();
 			

@@ -9,29 +9,34 @@ create table Golfer (
 );
 
 create table Course(
-	courseID serial,
 	courseName text, 
 	courseCity text, 
 	courseState text,
-	primary key(courseID)
+	primary key(courseName, courseCity, courseState)
 );
 
 create table Round(
 	datePlayed date, 
 	timeStarted time, 
 	golferUserName text,
-	courseID int, 
+	courseName text, 
+	courseCity text, 
+	courseState text, 
+	teeColor text,
 	score int,
 	primary key(dateplayed, timestarted ),
 	foreign key(golferUserName) references Golfer(userName),
-	foreign key(courseID) references Course(courseID)
+	foreign key(courseName, courseCity, courseState, teeColor) references Tees(courseName, courseCity, courseState, teeColor)
+	
 );
 
 create table Tees(
-	courseID int,
+	courseName text, 
+	courseCity text, 
+	courseState text,
 	teeColor text,
 	rating numeric,
 	slope int,
-	primary key(courseID, teecolor ),
-	foreign key(courseID) references Course(courseID)
+	primary key(courseName, courseCity, courseState, teecolor ),
+	foreign key(courseName, courseCity, courseState) references Course(courseName, courseCity, courseState)
 );

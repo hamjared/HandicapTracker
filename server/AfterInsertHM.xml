@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <course coursename="Highland Meadows" coursecity="Windsor" coursestate="CO"/>
+  <golfer/>
+  <round/>
+  <tees coursename="Highland Meadows" coursecity="Windsor" coursestate="CO" teecolor="BLUE" rating="70.2" slope="128"/>
+</dataset>

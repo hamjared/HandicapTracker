@@ -63,6 +63,13 @@ public class HandicapTrackerDatabaseTest {
 			db.insertNewCourseWithTees("Highland Meadows", "Windsor", "CO", "WHITE", 70.2, 128);
 		});
 	}
+	
+	@Test
+	public void testCreateNewUser() throws Exception {
+		IDatabaseConnection con = databaseTester.getConnection();
+		HandicapTrackerDatabase db = new HandicapTrackerDatabase(con.getConnection());
+		db.createUser("hamjared", "reallystrongpassword", "jared@email.com", "Jared", "Ham");
+	}
 
 
 	

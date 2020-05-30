@@ -1,10 +1,9 @@
-create table Golfer (
+create table Users (
 	userName text,
+	password text not null,
 	email text unique,
 	firstName text,
 	lastName text,
-	DOB date,
-	gender text,
 	primary key(userName)
 );
 
@@ -15,7 +14,7 @@ create table Course(
 	primary key(courseName, courseCity, courseState)
 );
 
-create table Round(
+create table Rounds(
 	datePlayed date, 
 	timeStarted time, 
 	golferUserName text,
@@ -25,7 +24,7 @@ create table Round(
 	teeColor text,
 	score int,
 	primary key(dateplayed, timestarted ),
-	foreign key(golferUserName) references Golfer(userName),
+	foreign key(golferUserName) references Users(userName),
 	foreign key(courseName, courseCity, courseState, teeColor) references Tees(courseName, courseCity, courseState, teeColor)
 	
 );

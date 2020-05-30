@@ -12,7 +12,7 @@ public class HandicapTrackerDatabase {
 	private Connection con;	
 	private static final String url = "jdbc:postgresql://192.168.1.126:5432/handicapTracker";
 	private static final String user = "jared";
-	private static final String password = "CuCsu2528";
+	private static final String password = "";
 	
 	HandicapTrackerDatabase(){
 		try {

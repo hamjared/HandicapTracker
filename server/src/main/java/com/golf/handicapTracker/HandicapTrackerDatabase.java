@@ -20,7 +20,6 @@ public class HandicapTrackerDatabase {
 	private static final String url = "jdbc:postgresql://192.168.1.126:5432/handicapTracker";
 	private static final String user = "jared";
 	
-	
 	HandicapTrackerDatabase(){
 		 
 		try {
@@ -48,15 +47,11 @@ public class HandicapTrackerDatabase {
 		this.con = con;
 	}
 	
-	
-	
-	
 	public void insertNewCourseWithTees(String courseName, String courseCity, String courseState, String teeColor, double rating, int slope, int par ) throws SQLException {
 		this.insertNewCourse(courseName, courseCity, courseState);
 		this.insertNewTees(courseName, courseCity, courseState, teeColor, rating, slope, par);
 		
 	}
-	
 	
 	public void insertNewTees(String courseName, String courseCity, String courseState, String teeColor, double rating, int slope, int par) throws SQLException {
 		PreparedStatement stmt;
@@ -203,7 +198,5 @@ public class HandicapTrackerDatabase {
 		
 		return (int) Math.round(handicapIndex * slope/113.0 + (rating - par));
 	}
-	
-
 	
 }

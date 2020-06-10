@@ -1,4 +1,4 @@
 insert into course values
-(default, 'Southridge', 'Fort Collins', 'CO'),
-(default, 'Colindale', 'Fort Collins', 'CO'),
-(default, 'City Park', 'Fort Collins', 'CO');
+('Southridge', 'Fort Collins', 'CO'),
+('Collindale', 'Fort Collins', 'CO'),
+('City Park', 'Fort Collins', 'CO');

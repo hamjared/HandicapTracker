@@ -1,32 +1,20 @@
 <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
-  <mat-card class="box">
-    <form class="example-form">
 
-      <mat-card-content>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Username">
-        </mat-form-field>
+      <mat-table [datasource]="dataSource">
+        <ng-container matColumnDef="course">
+          <mat-header-cell *matHeaderCellDef> Course </mat-header-cell>
+          <mat-cell *matCellDef="let course">  </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="tees">
+          <mat-header-cell *matHeaderCellDef> Tees </mat-header-cell>
+          <mat-cell *matCellDef="let tees">  </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="score">
+          <mat-header-cell *matHeaderCellDef> Score </mat-header-cell>
+          <mat-cell *matCellDef="let score">  </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
+      </mat-table>
 
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Email">
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Password">
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width">
-          <mat-label>Choose a role...</mat-label>
-          <mat-select [(value)]="selected">
-            <mat-option [value]="roles" *ngFor="let roles of Roles">{{roles}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-      </mat-card-content>
-
-      <button mat-stroked-button color="accent" class="btn-block">User Profile</button>
-
-    </form>
-  </mat-card>
 </div>

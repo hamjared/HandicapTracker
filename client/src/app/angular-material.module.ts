@@ -20,6 +20,8 @@ import {
    MatTableModule,
    MatPaginatorModule
 } from '@angular/material';
+import { UserProfileComponent } from './components';
+
 
 @NgModule({
    imports: [

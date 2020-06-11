@@ -19,6 +19,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 /* Components */
 import { LogInComponent } from './components/log-in/log-in.component';
 import { RegisterComponent } from './components/register/register.component';
+import {UserProfileComponent} from './components/user-profile/user-profile.component';
 
 
 @NgModule({
@@ -26,8 +27,7 @@ import { RegisterComponent } from './components/register/register.component';
     AppComponent,
     LogInComponent,
     RegisterComponent,
-    RegisterComponent,
-    LogInComponent
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

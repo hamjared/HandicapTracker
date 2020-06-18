@@ -17,8 +17,8 @@ import java.util.Properties;
 import spark.Spark;
 
 
-public class App{
-	static Logger log = Logger.getLogger(App.class);
+public class HandicapTrackerEndpoint{
+	static Logger log = Logger.getLogger(HandicapTrackerEndpoint.class);
 	static final String keystoreFile = "config/clientkeystore";
 	
     public static void main( String[] args ) throws FileNotFoundException, IOException
@@ -26,9 +26,15 @@ public class App{
 //    	BasicConfigurator.configure();
 //    	log.setLevel(Level.OFF);
 
-    	serverSetup();
+//    	serverSetup();
         
-       
+		  before((request, response) -> {
+	          response.header("Access-Control-Allow-Origin", "*");
+	          response.header("Access-Control-Request-Method", "*");
+	          response.header("Access-Control-Allow-Headers", "*");
+	          response.type("application/json");
+	
+	      });
         get("/hello", (req, res) -> "Hello World");
         
         
@@ -51,10 +57,10 @@ public class App{
             	System.out.println("Before protected  call");
             });
         	
-        	get("/getHandicapIndex", (req, res) -> {
+        	post("/getHandicapIndex", (req, res) -> {
         		return UserEventHandler.getHandicapIndex(req, res);
         	});
-        	get("/getCourseHandicap", (req, res) -> {
+        	post("/getCourseHandicap", (req, res) -> {
         		return UserEventHandler.getCourseHandicap(req, res);
         	});
         });
@@ -85,7 +91,7 @@ public class App{
         	JSONObject body = (JSONObject) new JSONParser().parse(req.body());
         	
         	try {
-        		if(con.validateUserPassword((String) body.get("username"), (String) body.get("password"))) {
+        		if(con.login((String) body.get("username"), (String) body.get("password"))) {
         			res.status(200);
         			return "Login Succesful";
         		}

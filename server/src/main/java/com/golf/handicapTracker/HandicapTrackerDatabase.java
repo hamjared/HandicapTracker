@@ -10,23 +10,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Properties;
 
 
 
-public class HandicapTrackerDatabase {
+public class HandicapTrackerDatabase implements AdminHandicapTrackerDatabaseAPI, UserHandicapTrackerDatabaseAPI, UtilityHandicapTrackerDatabaseAPI {
 	
 	private Connection con;	
-	private static final String url = "jdbc:postgresql://192.168.1.126:5432/handicapTracker";
+	private static final String url = "jdbc:postgresql://10.0.0.185:5432/handicapTracker";
 	private static final String user = "jared";
 	
-	HandicapTrackerDatabase(){
+	public HandicapTrackerDatabase(){
 		 
 		try {
 			con = DriverManager.getConnection(url, user, getDBPassword());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	HandicapTrackerDatabase(Connection con){
+		this.con = con;
 	}
 	
 	private String getDBPassword() {
@@ -43,9 +49,7 @@ public class HandicapTrackerDatabase {
 		return props.getProperty("dbpassword");
 	}
 
-	HandicapTrackerDatabase(Connection con){
-		this.con = con;
-	}
+
 	
 	public void insertNewCourseWithTees(String courseName, String courseCity, String courseState, String teeColor, double rating, int slope, int par ) throws SQLException {
 		this.insertNewCourse(courseName, courseCity, courseState);
@@ -79,7 +83,8 @@ public class HandicapTrackerDatabase {
 			
 	}
 	
-	public void createUser(String userName, String password, String email, String firstName, String lastName) throws SQLException {
+	public void createUser(String userName, String password, 
+			String email, String firstName, String lastName) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("insert into users values (?,crypt(?,gen_salt('bf')), ?, ?, ?)");
 		stmt.setString(1, userName);
 		stmt.setString(2, password);
@@ -89,7 +94,7 @@ public class HandicapTrackerDatabase {
 		stmt.executeUpdate();
 	}
 	
-	public boolean validateUserPassword(String userName, String password) throws SQLException {
+	public boolean login(String userName, String password) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("SELECT userName FROM Users where userName = ? and password = crypt(?, password)");
 		stmt.setString(1, userName);
 		stmt.setString(2, password);
@@ -107,7 +112,8 @@ public class HandicapTrackerDatabase {
 		 return false;
 	}
 	
-	public void insertRound(String userName, String courseName, String courseCity, String courseState, String teeColor, Timestamp timeStamp, int score) throws SQLException {
+	public void insertRound(String userName, String courseName, String courseCity, 
+			String courseState, String teeColor, Timestamp timeStamp, int score) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO Rounds values (?, ?, ?, ?, ?, ?, ?)");
 		stmt.setTimestamp(1, timeStamp);
 		stmt.setString(2, userName);
@@ -197,6 +203,18 @@ public class HandicapTrackerDatabase {
 		int par = this.getCoursePar(courseName, courseCity, courseState, teeColor);
 		
 		return (int) Math.round(handicapIndex * slope/113.0 + (rating - par));
+	}
+
+	@Override
+	public ArrayList<Map<String, String>> getCourses() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getTees(String courseName, String courseCity, String courseState) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

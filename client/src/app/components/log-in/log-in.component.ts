@@ -17,11 +17,27 @@ export class LogInComponent implements OnInit {
     console.log("Hello");
   }
 
-  login(){
+  async login(){
     console.log("Login");
     console.log(this.userName);
     console.log(this.password);
     this.router.navigate(['/userProfile'])
+
+    let requestBody = {
+    "username": "jared",
+    "courseName": "Highland Meadows",
+    "courseCity": "Windsor",
+    "courseState": "CO",
+    "teeColor": "BLUE"
+};
+
+    const requestOptions = {
+    method: "POST",
+    body: JSON.stringify(requestBody)
+    };
+    let response = await fetch("http://localHost:4567/user/getCourseHandicap", requestOptions);
+
+    console.log(await response.text());
 
   }
 
@@ -32,5 +48,7 @@ export class LogInComponent implements OnInit {
   userNameChanged(event){
     this.userName = event.target.value;
   }
+
+
 
 }

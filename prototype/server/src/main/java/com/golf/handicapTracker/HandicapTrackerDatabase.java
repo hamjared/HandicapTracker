@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -19,7 +20,7 @@ import java.util.Properties;
 public class HandicapTrackerDatabase implements AdminHandicapTrackerDatabaseAPI, UserHandicapTrackerDatabaseAPI, UtilityHandicapTrackerDatabaseAPI {
 	
 	private Connection con;	
-	private static final String url = "jdbc:postgresql://10.0.0.185:5432/handicapTracker";
+	private static final String url = "jdbc:postgresql://24.8.8.78:5432/handicapTracker";
 	private static final String user = "jared";
 	
 	public HandicapTrackerDatabase(){
@@ -144,6 +145,7 @@ public class HandicapTrackerDatabase implements AdminHandicapTrackerDatabaseAPI,
 		ResultSet rs = stmt.executeQuery();
 		
 		rs.first();
+		System.out.println(rs.getDouble(1));
 		return rs.getDouble(1);
 		
 	}
@@ -206,15 +208,44 @@ public class HandicapTrackerDatabase implements AdminHandicapTrackerDatabaseAPI,
 	}
 
 	@Override
-	public ArrayList<Map<String, String>> getCourses() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Course> getCourses() throws SQLException {
+		ArrayList<Course> courses = new ArrayList<>();
+		PreparedStatement stmt = con.prepareStatement("select * from course");
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			Course curCourse = new Course();
+			curCourse.setName(rs.getString(1));
+			curCourse.setCity(rs.getString(2));
+			curCourse.setState(rs.getString(3));
+			System.out.println(curCourse);
+			courses.add(curCourse);
+		}
+		return courses;
 	}
 
 	@Override
-	public ArrayList<String> getTees(String courseName, String courseCity, String courseState) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Tee> getTees(String courseName, String courseCity, String courseState) throws SQLException {
+		ArrayList<Tee> tees = new ArrayList<>();
+		PreparedStatement stmt = con.prepareStatement("SELECT teecolor, par, rating, slope FROM tees WHERE " +
+														"courseName = ? and courseCity = ? and courseState = ?");
+		
+		stmt.setString(1, courseName);
+		stmt.setString(2, courseCity);
+		stmt.setString(3, courseState);
+		
+		ResultSet rs = stmt.executeQuery();
+		
+		while (rs.next()) {
+			Tee curTee = new Tee();
+			curTee.setColor(rs.getString(1));
+			curTee.setPar(rs.getString(2));
+			curTee.setRating(rs.getString(3));
+			curTee.setSlope(rs.getString(4));
+			tees.add(curTee);
+		}
+		
+		return tees;
+		
 	}
 	
 }

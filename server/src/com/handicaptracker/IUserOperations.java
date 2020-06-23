@@ -1,5 +1,7 @@
 package com.handicaptracker;
 
+import java.sql.SQLException;
+
 public interface IUserOperations {
 
    /**
@@ -8,11 +10,10 @@ public interface IUserOperations {
     * @param email
     * @param firstName
     * @param lastName
-    * @return Returns true upon successful user creation, otherwise returns
-    *         false
+    * @throws SQLException 
     */
-   public boolean createUser(String username, String password, String email,
-         String firstName, String lastName);
+   public void createUser(String username, String password, String email,
+         String firstName, String lastName) throws SQLException;
 
    /**
     * @param username

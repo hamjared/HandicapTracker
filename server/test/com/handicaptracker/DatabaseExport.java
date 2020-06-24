@@ -16,12 +16,12 @@ public class DatabaseExport {
         // database connection
         
         Connection jdbcConnection = DriverManager.getConnection(
-            "jdbc:postgresql://10.0.0.185/handicaptrackerfinaltest", "jared", "CuCsu2528");
+            "jdbc:postgresql://localhost/handicaptrackertest", "jared", "marvin123");
         IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
 
         // full database export
         IDataSet fullDataSet = connection.createDataSet();
-        FlatXmlDataSet.write(fullDataSet, new FileOutputStream("src/resources/test_databaseXMLFiles/afterInsertBob.xml"));
+        FlatXmlDataSet.write(fullDataSet, new FileOutputStream("src/resources/test_databaseXMLFiles/afterInsertHighlandMeadows.xml"));
    }
 
 }

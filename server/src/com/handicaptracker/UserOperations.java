@@ -29,13 +29,13 @@ public class UserOperations extends Operations implements IUserOperations
       stmt.setBoolean(7, false);
 
       stmt.executeUpdate();
-      
+
       myConnectionPool.returnConnection(con);
    }
 
    @Override
-   public void deleteUser(String username, String password) throws SQLException, NoSuchElementException,
-   InvalidCredentialsException
+   public void deleteUser(String username, String password) throws SQLException,
+         NoSuchElementException, InvalidCredentialsException
    {
       login(username, password);
 
@@ -45,7 +45,7 @@ public class UserOperations extends Operations implements IUserOperations
       PreparedStatement stmt = con.prepareStatement(query.toString());
       stmt.setString(1, username);
       stmt.executeUpdate();
-      
+
       myConnectionPool.returnConnection(con);
    }
 
@@ -66,7 +66,7 @@ public class UserOperations extends Operations implements IUserOperations
       stmt.setString(2, username);
 
       stmt.executeUpdate();
-      
+
       myConnectionPool.returnConnection(con);
    }
 
@@ -97,13 +97,11 @@ public class UserOperations extends Operations implements IUserOperations
                .build();
       }
 
-      
       if (rowCount != 1)
       {
          throw new InvalidCredentialsException();
       }
-      
-      
+
       return user;
 
    }

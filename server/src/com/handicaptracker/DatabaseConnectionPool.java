@@ -26,6 +26,9 @@ public class DatabaseConnectionPool
       this.setDatabaseproperties();
    }
 
+   /**
+    * 
+    */
    public void initialize()
    {
       
@@ -45,11 +48,18 @@ public class DatabaseConnectionPool
       }
    }
 
+   /**
+    * @return
+    * @throws NoSuchElementException
+    */
    public Connection getConnection() throws NoSuchElementException
    {
       return myConnections.pop();
    }
 
+   /**
+    * @param connection
+    */
    public void returnConnection(Connection connection)
    {
       myConnections.push(connection);

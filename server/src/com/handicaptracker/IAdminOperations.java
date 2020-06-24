@@ -1,18 +1,22 @@
 package com.handicaptracker;
 
+import java.sql.SQLException;
+
 public interface IAdminOperations {
 
    /**
     * @param course Course to be added
     * @return
+    * @throws SQLException 
     */
-   public boolean addCourse(Course course);
+   public void addCourse(Course course) throws SQLException;
 
    /**
     * @param tee Tee to be added
     * @return
+    * @throws SQLException 
     */
-   public boolean addTees(Tee tee);
+   public void addTees(Tee tee) throws SQLException;
 
    /**
     * @param Course course to be removed

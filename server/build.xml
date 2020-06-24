@@ -1,53 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="server">
-    <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../eclipse/eclipse/"/>
-    <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.8"/>
-    <property name="source" value="1.8"/>
-    <path id="server.classpath">
-        <pathelement location="bin"/>
-        <pathelement location="lib"/>
-    	<pathelement location="JUnit 3"/>
-    </path>
-    <target name="init">
-        <mkdir dir="bin"/>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="src">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="clean">
-        <delete dir="bin"/>
-    </target>
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
-            <src path="src"/>
-            <classpath refid="server.classpath"/>
-        </javac>
-    </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
-         	
+<project name = "Golf Handicap Tracker" default = "info">
+	<property name="testdir" location = "test"/>
+	<path id="server.classpath">
+		<pathelement location="bin"/>
+		<pathelement location="lib"/>
+		<path location= "junit/junit-3.8.1.jar"/>
+		<pathelement location="lib/postgresql-42.2.14.jar"/>
+		<pathelement location="lib/dbunit-2.7.0.jar"/>
+		<pathelement location="lib/slf4j-api-1.7.9.jar"/>
+	</path>
+
+	<target name = "info">
+		<echo> Hello there</echo>
+	</target>
+	<target name = "test-clean">
+		<delete verbose = "true">
+			<fileset dir = "testbin" includes = "**/*.class"/>
+		</delete>
+	</target>
+	<target name = "test-compile" depends = "test-clean">
+		<javac   destdir = "testbin" includeantruntime="false">
+			<src path = "src"/>
+			<src path = "test"/>
+			<classpath refid = "server.classpath"/>
+		</javac>
+	</target>
+	<target name = "test">
+		<echo> You Selected the test target</echo>
+		<junit  printsummary = "true" showoutput = "false">
+			<classpath refid = "server.classpath"/>	
+			<batchtest>
+				<fileset dir="${testdir}">
+					<include name = "**/*Test*.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
 </project>
+	

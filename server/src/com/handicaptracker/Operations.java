@@ -1,9 +1,11 @@
 package com.handicaptracker;
 
 public class Operations implements ISearchOperations {
-   private DatabaseConnectionPool connectionPool;
+   protected DatabaseConnectionPool myConnectionPool;
    
-   protected DatabaseConnectionPool getConnectionPool() {
-      return connectionPool;
+   Operations() {
+      myConnectionPool = new DatabaseConnectionPool(2);
+      myConnectionPool.initialize();
    }
+   
 }

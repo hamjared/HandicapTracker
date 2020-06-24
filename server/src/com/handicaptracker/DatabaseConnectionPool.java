@@ -58,10 +58,11 @@ public class DatabaseConnectionPool
    private void setDatabaseproperties()
    {
       Properties properties = new Properties();
+      
       try
       {
          properties.load(new FileInputStream(
-               "src/resources/databaseConfig.properties"));
+               getPropertiesFileName()));
       } catch (IOException e)
       {
          System.out.println("Database configuration file not found");
@@ -72,6 +73,11 @@ public class DatabaseConnectionPool
       myDatabaseUsername = properties.getProperty("username");
 
    }
+   
+   private String getPropertiesFileName() {
+      return System.getenv("PRODUCTION") != null ? ("src/resources/databaseConfig.properties") : "src/resources/test_databaseConfig.properties";
+   }
+   
 
 }
 

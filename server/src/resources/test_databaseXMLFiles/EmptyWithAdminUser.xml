@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <course/>
+  <rounds/>
+  <tees/>
+  <users username="bob" password="$2a$06$w.HEUlXXCtY5mqYMX/a.8.7iLoBiylx/O2Xj7xuL89I.GBAjMeBlS" firstname="bob" lastname="smith" isadmin="true" canchangepriviliges="true"/>
+</dataset>

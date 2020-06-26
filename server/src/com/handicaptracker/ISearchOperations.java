@@ -1,5 +1,7 @@
 package com.handicaptracker;
 
-public interface ISearchOperations {
+import java.sql.SQLException;
 
+public interface ISearchOperations {
+   public Course getCourse(String courseName, String courseCity, String courseState) throws SQLException;
 }

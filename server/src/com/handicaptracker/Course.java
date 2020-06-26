@@ -1,5 +1,7 @@
 package com.handicaptracker;
 
+import java.sql.SQLException;
+
 public class Course {
    private int courseId;
    private String courseName;
@@ -10,12 +12,28 @@ public class Course {
    public Course() {
       
    }
+   
+   public String toString() {
+      return courseName + "(" + courseCity + ", " + courseState + ")";
+   }
 
    /**
     * @return
     */
    public int getCourseId()
    {
+      if(courseId != 0) {
+         return courseId;
+      }
+      ISearchOperations search = new Operations();
+      try
+      {
+         Course course = search.getCourse(courseName, courseCity, courseState);
+         courseId = course != null ? course.getCourseId() : 0;
+      } catch (SQLException e)
+      {
+         
+      }
       return courseId;
    }
 

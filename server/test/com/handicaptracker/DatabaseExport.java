@@ -8,6 +8,9 @@ import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.dataset.FilteredDataSet;
+import org.dbunit.database.DatabaseSequenceFilter;
+
 
 public class DatabaseExport {
 
@@ -16,12 +19,13 @@ public class DatabaseExport {
         // database connection
         
         Connection jdbcConnection = DriverManager.getConnection(
-            "jdbc:postgresql://localhost/handicaptrackertest", "jared", "marvin123");
+            "jdbc:postgresql://localhost/handicaptrackertest", "jared", "CuCsu2528");
         IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
 
         // full database export
-        IDataSet fullDataSet = connection.createDataSet();
-        FlatXmlDataSet.write(fullDataSet, new FileOutputStream("src/resources/test_databaseXMLFiles/afterInsertHighlandMeadows.xml"));
+//        IDataSet fullDataSet = connection.createDataSet();
+        IDataSet fullDataSet = new FilteredDataSet(new DatabaseSequenceFilter(connection), connection.createDataSet());
+        FlatXmlDataSet.write(fullDataSet, new FileOutputStream("src/resources/test_databaseXMLFiles/EmptyDB.xml"));
    }
 
 }

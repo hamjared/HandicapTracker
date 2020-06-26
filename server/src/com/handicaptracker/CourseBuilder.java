@@ -1,14 +1,17 @@
 package com.handicaptracker;
 
+import java.sql.SQLException;
+
 public class CourseBuilder implements ICourseBuilder
 {
 
    Course course;
-   
-   public CourseBuilder(){
+
+   public CourseBuilder()
+   {
       course = new Course();
    }
-   
+
    @Override
    public ICourseBuilder id(int id)
    {
@@ -47,6 +50,7 @@ public class CourseBuilder implements ICourseBuilder
    @Override
    public Course build()
    {
+      
       return course;
    }
 

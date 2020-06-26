@@ -15,6 +15,8 @@ public interface IUserOperations {
     */
    public void createUser(String username, String password, String email,
          String firstName, String lastName) throws SQLException;
+   
+   public void createUser(User user, String password) throws SQLException;
 
    /**
     * @param username

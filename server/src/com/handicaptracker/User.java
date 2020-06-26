@@ -15,6 +15,12 @@ public class User
    {
 
    }
+   
+   public String toString() {
+      StringBuilder returnString = new StringBuilder();
+      returnString.append(firstName).append(" ").append(lastName);
+      return returnString.toString();
+   }
 
    /**
     * @return

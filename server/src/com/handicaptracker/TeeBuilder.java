@@ -4,7 +4,7 @@ public class TeeBuilder implements ITeeBuilder
 {
    Tee tee;
    
-   TeeBuilder(){
+   public TeeBuilder(){
       tee = new Tee();
    }
    @Override

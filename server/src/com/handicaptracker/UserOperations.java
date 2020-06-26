@@ -32,6 +32,12 @@ public class UserOperations extends Operations implements IUserOperations
 
       myConnectionPool.returnConnection(con);
    }
+   
+   @Override
+   public void createUser(User user, String password) throws SQLException
+   {
+      createUser(user.getUsername(), password, user.getEmail(), user.getFirstName(), user.getLastName());
+   }
 
    @Override
    public void deleteUser(String username, String password) throws SQLException,
@@ -105,5 +111,7 @@ public class UserOperations extends Operations implements IUserOperations
       return user;
 
    }
+
+
 
 }

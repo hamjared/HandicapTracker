@@ -11,6 +11,10 @@ public class Tee {
    {
       return course;
    }
+   
+   public String toString() {
+      return teeColor + "(" + rating + "/" + slope + " " + yardage + "yards)"; 
+   }
    public void setCourse(Course course)
    {
       this.course = course;

@@ -4,48 +4,65 @@ import java.sql.SQLException;
 
 public interface IAdminOperations {
 
+
    /**
-    * @param course Course to be added
+    * @param course
+    * @param user
+    * @param password
+    * @throws SQLException
+    * @throws InvalidCredentialsException
+    */
+   public void addCourse(Course course, User user, String password) throws SQLException, InvalidCredentialsException;
+
+   /**
+    * @param tee
+    * @param user
+    * @param password
+    * @throws SQLException
+    * @throws InvalidCredentialsException 
+    */
+   public void addTees(Tee tee, User user, String password) throws SQLException, InvalidCredentialsException;
+
+   /**
+    * @param course
+    * @param user
+    * @param password
     * @return
+    * @throws InvalidCredentialsException 
     * @throws SQLException 
     */
-   public void addCourse(Course course) throws SQLException;
+   public void removeCourse(Course course, User user, String password) throws SQLException, InvalidCredentialsException;
 
    /**
-    * @param tee Tee to be added
+    * @param tee
+    * @param user
+    * @param password
     * @return
+    * @throws InvalidCredentialsException 
     * @throws SQLException 
     */
-   public void addTees(Tee tee) throws SQLException;
+   public void removeTee(Tee tee, User user, String password) throws SQLException, InvalidCredentialsException;
 
    /**
-    * @param Course course to be removed
+    * @param authorizingUser
+    * @param authorizingPassword
+    * @param newAdminUserName
     * @return
-    */
-   public boolean removeCourse(Course course);
-
-   /**
-    * @param tee Tee to be removed
-    * @return
-    */
-   public boolean removeTee(Tee tee);
-
-   /**
-    * @param authorizingUser     Username of person granting admin priviliges
-    * @param authorizingPassword Password of person granting admin priviliges
-    * @param newAdminUserName    Username of person to grant priviliges to
-    * @return
+    * @throws InvalidCredentialsException 
+    * @throws SQLException 
     */
    public boolean grantAdminPriviliges(String authorizingUser,
-         String authorizingPassword, String newAdminUserName);
+         String authorizingPassword, String newAdminUserName) throws SQLException, InvalidCredentialsException;
 
    /**
-    * @param authorizingUser     Username of person revoking admin priviliges
-    * @param authorizingPassword Password of person revoking admin priviliges
-    * @param revokeAdminUserName Username of person to revoke priviliges from
+    * @param authorizingUser
+    * @param authorizingPassword
+    * @param revokeAdminUserName
     * @return
+    * @throws InvalidCredentialsException 
+    * @throws SQLException 
     */
    public boolean revokeAdminPriviliges(String authorizingUser,
-         String authorizingPassword, String revokeAdminUserName);
+         String authorizingPassword, String revokeAdminUserName) throws SQLException, InvalidCredentialsException;
 
 }

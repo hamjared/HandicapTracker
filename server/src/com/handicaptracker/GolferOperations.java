@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GolferOperations extends Operations implements IGolferOperations
 {
@@ -37,7 +39,7 @@ public class GolferOperations extends Operations implements IGolferOperations
    {
       StringBuilder query = new StringBuilder();
       query.append(
-               "Delete from rounds where datePlayed = ? and golferUsername = ?");
+            "Delete from rounds where datePlayed = ? and golferUsername = ?");
       Connection con = myConnectionPool.getConnection();
       try
       {
@@ -90,24 +92,56 @@ public class GolferOperations extends Operations implements IGolferOperations
       double handicapIndex = getHandicapIndex(user);
 
       double courseHandicap = handicapIndex * tee.getRating() / 113.0
-               + (tee.getRating() - tee.getPar());
+            + (tee.getRating() - tee.getPar());
 
       return (int) Math.round(courseHandicap);
 
    }
 
    @Override
-   public void getRounds(User user) throws SQLException
+   public List<Round> getRounds(User user) throws SQLException
    {
-      // TODO Auto-generated method stub
+      List<Round> rounds = new ArrayList<Round>();
+      StringBuilder query = new StringBuilder();
+      query.append(
+            "SELECT dateplayed, golferusername, courseid, teecolor, score, differential ")
+            .append("FROM rounds ")
+            .append("WHERE golferusername = ? ")
+            .append("ORDER BY dateplayed");
+      Connection con = myConnectionPool.getConnection();
+
+      ResultSet rs;
+      try
+      {
+         PreparedStatement stmt = con.prepareStatement(query.toString());
+         stmt.setString(1, user.getUsername());
+         rs = stmt.executeQuery();
+      } catch (SQLException e)
+      {
+         throw e;
+      } finally
+      {
+         myConnectionPool.returnConnection(con);
+      }
+
+      
+      
+      while (rs.next())
+      {
+         Round round = new RoundBuilder().datePlayed(rs.getDate(1))
+               .golferUsername(rs.getString(2))
+               .courseId(rs.getInt(3))
+               .teeColor(rs.getString(4))
+               .score(rs.getInt(5))
+               .differential(rs.getDouble(6))
+               .build();
+         
+         rounds.add(round);
+      }
+
+      return rounds;
 
    }
 
-   @Override
-   public void getRounds(User use, int limit) throws Exception
-   {
-      // TODO Auto-generated method stub
-
-   }
 
 }

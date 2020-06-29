@@ -1,6 +1,7 @@
 package com.handicaptracker;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public interface IGolferOperations {
 
@@ -12,8 +13,6 @@ public interface IGolferOperations {
 	
 	public Integer getCourseHandicap(Tee tee, User user) throws SQLException;
 	
-	public void getRounds(User user) throws SQLException;
-	
-	public void getRounds(User use, int limit) throws Exception;
+	public List<Round> getRounds(User user) throws SQLException;
 		
 }

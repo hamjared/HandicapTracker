@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.dbunit.IDatabaseTester;
@@ -92,6 +93,8 @@ public class GolferOperationsTest extends TestCase
 
    }
    
+
+   
    public void testGetHandicapIndex19Rounds() throws Exception
    {
       beforeEach();
@@ -133,15 +136,24 @@ public class GolferOperationsTest extends TestCase
       assertEquals(expectedCourseHandicap, actualCourseHandicap);
    }
 
-   public void testGetRoundsUser()
+   public void testGetRoundsUser() throws Exception
    {
-      fail("Not yet implemented");
+      beforeEach();
+      for (int i = 0; i < 20; i++)
+      {
+         Round round = new RoundBuilder().courseId(hm.getCourseId())
+                  .teeColor("BLUE")
+                  .datePlayed(new Date(
+                           System.currentTimeMillis() + i * 90_000_000l))
+                  .score(70 + i).golferUsername(bob.getUsername()).build();
+         golferOperations.addRound(round);
+
+      }
+      
+      List<Round> rounds = golferOperations.getRounds(bob);
+      assertEquals(20, rounds.size());
    }
 
-   public void testGetRoundsUserInt()
-   {
-      fail("Not yet implemented");
-   }
 
    private void beforeEach() throws Exception
    {

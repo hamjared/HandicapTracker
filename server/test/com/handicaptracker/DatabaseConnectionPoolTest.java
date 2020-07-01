@@ -13,7 +13,7 @@ public class DatabaseConnectionPoolTest extends TestCase
    private final static int numConnections = 2;
    
    protected void setUp() {
-      pool = new DatabaseConnectionPool(numConnections);
+      pool = DatabaseConnectionPool.getInstance();
    }
    
    public void testInitialize()
@@ -51,11 +51,12 @@ public class DatabaseConnectionPoolTest extends TestCase
       }
       pool.returnConnection(con);
       try {
-         pool.getConnection();
+         con = pool.getConnection();
          
       } catch(NoSuchElementException e) {
          assertTrue(false);
       }
+      pool.returnConnection(con);
    }
 
    

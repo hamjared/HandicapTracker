@@ -1,5 +1,6 @@
 package com.handicaptracker;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CourseBuilder implements ICourseBuilder
@@ -50,8 +51,22 @@ public class CourseBuilder implements ICourseBuilder
    @Override
    public Course build()
    {
-      
+
       return course;
+   }
+
+   @Override
+   public ICourseBuilder fromResultSet(ResultSet rs) throws SQLException
+   {
+
+      this.id(rs.getInt(1))
+            .name(rs.getString(2))
+            .city(rs.getString(3))
+            .state(rs.getString(4))
+            .numHoles(rs.getInt(5));
+
+      return this;
+
    }
 
 }

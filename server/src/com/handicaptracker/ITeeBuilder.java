@@ -1,5 +1,8 @@
 package com.handicaptracker;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public interface ITeeBuilder
 {
    /**
@@ -37,6 +40,15 @@ public interface ITeeBuilder
     * @return
     */
    public ITeeBuilder yardage(int yardage);
+   
+
+   /**
+    * @param rs
+    * @param course
+    * @return
+    * @throws SQLException
+    */
+   public ITeeBuilder fromResultSet(ResultSet rs, Course course) throws SQLException;
    
    /**
     * @return

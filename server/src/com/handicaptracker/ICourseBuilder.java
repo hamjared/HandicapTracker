@@ -1,5 +1,8 @@
 package com.handicaptracker;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public interface ICourseBuilder
 {
    /**
@@ -31,6 +34,13 @@ public interface ICourseBuilder
     * @return
     */
    public ICourseBuilder numHoles(int numHoles);
+   
+   /**
+    * @param rs
+    * @return
+    * @throws SQLException
+    */
+   public ICourseBuilder fromResultSet(ResultSet rs) throws SQLException;
    
    /**
     * @return

@@ -9,6 +9,11 @@ public class Round {
    private int score;
    private double differential;
    private Date datePlayed;
+   
+   public String toString() {
+      return datePlayed + "  " + score + "  " + differential; 
+   }
+   
    public String getGolferUserName()
    {
       return golferUserName;

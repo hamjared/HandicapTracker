@@ -13,10 +13,22 @@
 	<target name = "info">
 		<echo> Hello there</echo>
 	</target>
+	<target name = "clean">
+			<delete verbose = "true">
+				<fileset dir = "bin" includes = "**/*.class"/>
+			</delete>
+		</target>
 	<target name = "test-clean">
 		<delete verbose = "true">
 			<fileset dir = "testbin" includes = "**/*.class"/>
 		</delete>
+	</target>
+	<target name = "compile" depends = "clean">
+		<javac   destdir = "bin" includeantruntime="false">
+			<src path = "src"/>
+			<src path = "test"/>
+			<classpath refid = "server.classpath"/>
+		</javac>
 	</target>
 	<target name = "test-compile" depends = "test-clean">
 		<javac   destdir = "testbin" includeantruntime="false">
@@ -35,6 +47,17 @@
 				</fileset>
 			</batchtest>
 		</junit>
+	</target>
+	<target name = "build-jar">
+	   <jar destfile = "bin"
+	      basedir = "${build.dir}/classes"
+	      includes = "faxapp/util/**"
+	      excludes = "**/*Test*.java">
+	      
+	      <manifest>
+	         <attribute name = "Main-Class" value = "com.tutorialspoint.util.FaxUtil"/>
+	      </manifest>
+	   </jar>
 	</target>
 </project>
 	

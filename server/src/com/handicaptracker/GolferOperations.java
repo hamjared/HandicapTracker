@@ -91,7 +91,7 @@ public class GolferOperations extends Operations implements IGolferOperations
    {
       double handicapIndex = getHandicapIndex(user);
 
-      double courseHandicap = handicapIndex * tee.getRating() / 113.0
+      double courseHandicap = handicapIndex * tee.getSlope() / 113.0
             + (tee.getRating() - tee.getPar());
 
       return (int) Math.round(courseHandicap);
@@ -118,7 +118,7 @@ public class GolferOperations extends Operations implements IGolferOperations
          rs = stmt.executeQuery();
       } catch (SQLException e)
       {
-         throw e;
+         throw e; 
       } finally
       {
          myConnectionPool.returnConnection(con);

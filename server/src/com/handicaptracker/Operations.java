@@ -4,14 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Operations implements ISearchOperations
 {
    protected DatabaseConnectionPool myConnectionPool;
 
-   Operations()
+   public Operations()
    {
-      myConnectionPool = new DatabaseConnectionPool(2);
+      myConnectionPool = DatabaseConnectionPool.getInstance();
       myConnectionPool.initialize();
    }
 
@@ -26,7 +28,7 @@ public class Operations implements ISearchOperations
                .append("WHERE courseName = ? and courseCity = ? and courseState = ?");
       Connection con = myConnectionPool.getConnection();
 
-      ResultSet rs;
+      ResultSet rs; 
       try
       {
          PreparedStatement stmt = con.prepareStatement(query.toString());
@@ -39,19 +41,111 @@ public class Operations implements ISearchOperations
          throw e;
       } finally
       {
+         myConnectionPool.returnConnection(con); 
+      }
+
+      rs.next();
+      return new CourseBuilder().fromResultSet(rs).build();
+   }
+
+   @Override
+   public List<Course> getAllCourses() throws SQLException
+   {
+      List<Course> courses = new ArrayList<Course>();
+      StringBuilder query = new StringBuilder();
+      query.append(
+               "SELECT courseid, courseName, courseCity, courseState, numHoles ")
+               .append("FROM course");
+      Connection con = myConnectionPool.getConnection();
+
+      ResultSet rs; 
+      try
+      {
+         PreparedStatement stmt = con.prepareStatement(query.toString());
+         rs =  stmt.executeQuery();
+      } catch (SQLException e)
+      {
+         throw e;
+      } finally
+      {
          myConnectionPool.returnConnection(con);
       }
-
-      Course course = null;
-      while (rs.next())
-      {
-
-         IUserBuilder userBuilder = new UserBuilder();
-         course = new CourseBuilder().id(rs.getInt(1)).name(rs.getString(2))
-                  .city(rs.getString(3)).state(rs.getString(4))
-                  .numHoles(rs.getInt(5)).build();
+      while(rs.next()) {
+         courses.add(new CourseBuilder().fromResultSet(rs).build());
       }
-      return course;
+      return courses;
+   }
+
+   @Override
+   public List<Tee> getTees(Course course) throws SQLException
+   {
+      List<Tee> tees = new ArrayList<Tee>();
+      StringBuilder query = new StringBuilder();
+      query.append(
+               "SELECT courseid, teecolor, rating, slope, par, yardage ")
+               .append("FROM tees ")
+               .append("WHERE courseId = ?");
+      Connection con = myConnectionPool.getConnection();
+
+      ResultSet rs; 
+      try
+      {
+         PreparedStatement stmt = con.prepareStatement(query.toString());
+         stmt.setInt(1, course.getCourseId());
+         rs =  stmt.executeQuery();
+      } catch (SQLException e)
+      {
+         throw e;
+      } finally
+      {
+         myConnectionPool.returnConnection(con);
+      }
+      
+      while(rs.next()) {
+         tees.add(new TeeBuilder().fromResultSet(rs, course).build());
+      }
+      
+      return tees;
+   }
+
+   @Override
+   public Tee getTee(Course course, String teeColor) throws SQLException
+   {
+      // TODO Auto-generated method stub
+      return null;
+   }
+
+   @Override
+   public List<Course> searchByCourseName(String courseName) throws SQLException
+   {
+      List<Course> courses = new ArrayList<>();
+      StringBuilder query = new StringBuilder();
+      query.append(
+               "SELECT courseid, courseName, courseCity, courseState, numHoles ")
+               .append("FROM course ")
+               .append("WHERE courseName = ?");
+      Connection con = myConnectionPool.getConnection();
+
+      ResultSet rs; 
+      try
+      {
+         PreparedStatement stmt = con.prepareStatement(query.toString());
+         stmt.setString(1, courseName);
+         rs =  stmt.executeQuery();
+      } catch (SQLException e)
+      {
+         throw e;
+      } finally
+      {
+         myConnectionPool.returnConnection(con); 
+      }
+
+      
+      while(rs.next()) {
+         courses.add(new CourseBuilder().fromResultSet(rs).build());
+      }
+      return courses;
+
    }
 
 }
